@@ -33,17 +33,16 @@ class LentaViewModel @Inject constructor(
         fetchData()
     }
 
-    val posts: Flow<PagingData<ModelPost>> =
-        Pager(
-            PagingConfig(
-                enablePlaceholders = false,
-                pageSize = Constants.PER_PAGE,
-                maxSize = Constants.MAX_PAGE_SIZE,
-            ), pagingSourceFactory = {
-                PagingSourcePost(repository)
-            })
-            .flow.cachedIn(viewModelScope)
-
+//    val posts: Flow<PagingData<ModelPost>> =
+//        Pager(
+//            PagingConfig(
+//                enablePlaceholders = false,
+//                pageSize = Constants.PER_PAGE,
+//                maxSize = Constants.MAX_PAGE_SIZE,
+//            ), pagingSourceFactory = {
+//                PagingSourcePost(repository)
+//            })
+//            .flow.cachedIn(viewModelScope)
 
     private fun fetchData() {
         viewModelScope.launch(dispatchers.io) {

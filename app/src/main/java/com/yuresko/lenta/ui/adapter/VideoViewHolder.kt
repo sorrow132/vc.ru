@@ -81,6 +81,6 @@ class VideoViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     }
 
     companion object {
-        private const val DELAY_BEFORE_HIDE_THUMBNAIL = 500L
+        private const val DELAY_BEFORE_HIDE_THUMBNAIL = 50L
     }
 }
