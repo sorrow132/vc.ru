@@ -5,14 +5,11 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.yuresko.lenta.R
-import com.yuresko.lenta.ui.adapter.VideoAdapter
 import com.yuresko.lenta.base.UiState
+import com.yuresko.lenta.ui.adapter.VideoAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
