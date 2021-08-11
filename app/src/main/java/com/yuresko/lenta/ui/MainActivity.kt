@@ -2,6 +2,7 @@ package com.yuresko.lenta.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -36,15 +37,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.data.observe(this, { state ->
             when (state) {
                 is UiState.Error -> {
+                    progressBar.visibility = View.GONE
                     Log.e("Error state", state.error.message.toString())
                 }
                 UiState.Loading -> {
+                    progressBar.visibility = View.VISIBLE
                 }
                 is UiState.Success -> {
+                    progressBar.visibility = View.GONE
                     videoAdapter.setData(state.data)
                 }
             }
         })
-
     }
 }

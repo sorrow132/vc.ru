@@ -1,7 +1,6 @@
 package com.yuresko.lenta.data
 
 import com.yuresko.lenta.base.ResponseResult
-import com.yuresko.lenta.data.models.Items
 import com.yuresko.lenta.extensions.toModelPost
 import com.yuresko.lenta.models.ModelPost
 import com.yuresko.lenta.utils.DispatcherProvider
@@ -13,7 +12,7 @@ class RepositoryImpl @Inject constructor(
     private val dispatchers: DispatcherProvider
 ) : Repository {
     private val subSiteId: String = "237832"
-    private val sorting: String = "hotness"
+    private val sorting: String = "date"
     private val allSite: Boolean = false
     private val lastId: String = "422424"
 

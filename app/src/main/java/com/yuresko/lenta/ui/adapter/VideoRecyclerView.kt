@@ -1,4 +1,4 @@
-package com.dsilvera.videolist
+package com.yuresko.lenta.ui.adapter
 
 import android.content.Context
 import android.graphics.Point
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.yuresko.lenta.ui.adapter.VideoViewItem.Companion.ITEM_VIEW_TYPE_VIDEO
-import com.yuresko.lenta.ui.adapter.VideoAdapter
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel

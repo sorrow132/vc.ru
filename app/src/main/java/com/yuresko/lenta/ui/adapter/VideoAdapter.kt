@@ -2,12 +2,10 @@ package com.yuresko.lenta.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.yuresko.lenta.models.ModelPost
-import kotlinx.coroutines.flow.Flow
 
 class VideoAdapter :
     PagingDataAdapter<ModelPost, RecyclerView.ViewHolder>(DiffUtilCallBack()) {
