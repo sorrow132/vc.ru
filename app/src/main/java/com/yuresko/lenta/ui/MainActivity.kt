@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 is UiState.Success -> {
                     progressBar.visibility = View.GONE
-                    viewModel.loadNext()
                     videoAdapter.setData(state.data)
                 }
             }
