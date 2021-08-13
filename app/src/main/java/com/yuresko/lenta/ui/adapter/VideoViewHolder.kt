@@ -23,7 +23,12 @@ class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view), VideoPlayerEv
         itemView.postLikes.text = model.likes.toString()
 
         if (model.likes > 0)
-            itemView.postLikes.setTextColor(ContextCompat.getColor(itemView.context, R.color.comments_color))
+            itemView.postLikes.setTextColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.comments_color
+                )
+            )
         else
             itemView.postLikes.setTextColor(Color.GRAY)
 
@@ -31,10 +36,15 @@ class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view), VideoPlayerEv
         if (model.comments > 0)
             itemView.commentsCount.text = model.comments.toString()
         else
-            itemView.commentsCount.text =
-                itemView.context.resources.getString(R.string.count_comments)
+            itemView.commentsCount.text = itemView.context.resources.getString(R.string.count_comments)
 
-            itemView.headingPost.text = model.userDescription
+
+        if (model.headline.isEmpty()) {
+            itemView.headingPost.visibility = View.GONE
+        } else {
+            itemView.headingPost.visibility = View.VISIBLE
+            itemView.headingPost.text = model.headline
+        }
 
 
         // Set avatar

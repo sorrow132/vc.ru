@@ -19,7 +19,8 @@ data class Data(
     val author: Author,
     val subsite: SubSite,
     val blocks: List<Blocks>?,
-    val counters: Counters
+    val counters: Counters,
+    val title: String
 )
 
 data class Author(

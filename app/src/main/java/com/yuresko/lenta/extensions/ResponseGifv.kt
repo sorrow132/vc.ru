@@ -12,7 +12,7 @@ fun ResponseGifv.toModelPost(): List<ModelPost> {
             id = item.data.id.toInt(),
             avatar = START_URL + item.data.subsite.avatar.data.uuid + IMG_END_URL,
             name = item.data.author.name,
-            userDescription = item.data.author.description,
+            headline = item.data.title,
             subSiteName = item.data.subsite.name,
             video = START_URL + item.data.blocks?.firstOrNull()?.data?.items?.firstOrNull()?.image?.data?.uuid + GIF_END_URL,
             subSiteDescription = item.data.subsite.description,
