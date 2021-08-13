@@ -1,12 +1,10 @@
 package com.yuresko.lenta.ui
 
-import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yuresko.lenta.R
@@ -27,16 +25,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
 
         videoAdapter = VideoAdapter()
         videoRecyclerView.apply {
-            layoutManager =
-                WrapContentLinearLayoutManager(
-                    this@MainActivity,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
+            layoutManager = WrapContentLinearLayoutManager(
+                this@MainActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
             adapter = videoAdapter
         }
 

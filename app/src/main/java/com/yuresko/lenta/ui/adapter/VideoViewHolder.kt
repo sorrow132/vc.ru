@@ -34,12 +34,7 @@ class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view), VideoPlayerEv
             itemView.commentsCount.text =
                 itemView.context.resources.getString(R.string.count_comments)
 
-
-        if (model.userDescription.isEmpty())
-            itemView.headingPost.visibility = View.GONE
-        else
-            itemView.headingPost.visibility = View.VISIBLE
-        itemView.headingPost.text = model.userDescription
+            itemView.headingPost.text = model.userDescription
 
 
         // Set avatar
