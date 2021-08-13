@@ -22,9 +22,26 @@ data class Data(
     val counters: Counters
 )
 
+data class Author(
+    val id: String,
+    val name: String,
+    val description: String,
+    val avatar: Avatar,
+    val cover: Cover
+)
+
 data class Counters(
     val comments: Int,
     val favorites: Int
+)
+
+data class Cover(
+    val type: String,
+    val data: DataCover
+)
+
+data class DataCover(
+    val uuid: String
 )
 
 data class Blocks(
@@ -73,11 +90,4 @@ data class Avatar(
 data class DataAvatar(
     val uuid: String,
     val type: String
-)
-
-data class Author(
-    val id: String,
-    val name: String,
-    val description: String,
-    val avatar: Avatar
 )

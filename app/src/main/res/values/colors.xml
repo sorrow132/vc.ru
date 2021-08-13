@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#00AA11</color>
     <color name="def">#80FFFFFF</color>
+    <color name="comments_color">#00AA11</color>
 </resources>

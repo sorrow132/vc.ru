@@ -21,6 +21,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="16dp" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="headingPost, itemVideoPlayerContainer" />
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/userAvatar"
         android:layout_width="22dp"
@@ -36,9 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start"
+        android:fontFamily="@font/sfcompacttextmedium"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
         app:layout_constraintStart_toEndOf="@+id/userAvatar"
         app:layout_constraintTop_toTopOf="@+id/userAvatar"
@@ -49,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start"
+        android:fontFamily="@font/sfcompacttextregular"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
@@ -56,15 +63,31 @@
         app:layout_constraintTop_toTopOf="@+id/userAvatar"
         tools:text="Maxim Yuresko" />
 
+    <TextView
+        android:id="@+id/headingPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sfcompacttextmedium"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/subSiteName"
+        tools:text="Long text line number one" />
+
     <FrameLayout
         android:id="@+id/itemVideoPlayerContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
         android:layout_marginTop="@dimen/margin_top"
         app:layout_constraintDimensionRatio="W,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userAvatar">
+        app:layout_constraintTop_toBottomOf="@+id/headingPost">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/itemVideoPlayerThumbnail"
@@ -98,6 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_sm"
+        android:fontFamily="@font/sfcompacttextmedium"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/commentsIcon"
         app:layout_constraintStart_toEndOf="@+id/commentsIcon"
@@ -109,6 +133,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_end_sm"
+        android:fontFamily="@font/sfcompacttextmedium"
         android:textColor="#00AA11"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/commentsIcon"

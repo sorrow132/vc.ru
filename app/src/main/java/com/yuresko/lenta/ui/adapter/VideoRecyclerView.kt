@@ -11,15 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.yuresko.lenta.ui.adapter.VideoViewItem.Companion.ITEM_VIEW_TYPE_VIDEO
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 
-
-@ExperimentalCoroutinesApi
 class VideoRecyclerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr) {
@@ -63,7 +59,6 @@ class VideoRecyclerView @JvmOverloads constructor(
         if (play) playerVideo.play() else playerVideo.pause()
     }
 
-
     private fun playVideo(targetViewHolder: VideoPlayerEventListener?) {
         if (currentVideoHolder != null && currentVideoHolder == targetViewHolder) return
         try {
@@ -76,7 +71,7 @@ class VideoRecyclerView @JvmOverloads constructor(
     }
 
     private fun videoViewHolderChanges(): Flow<VideoPlayerEventListener?> {
-        return callbackFlow<Int> {
+        return callbackFlow {
             val listener = object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     offer(dy)
@@ -107,12 +102,11 @@ class VideoRecyclerView @JvmOverloads constructor(
     private fun findCurrentVideoPosition(): Int {
         var result = NO_POSITION
         val linearLayoutManager = layoutManager as LinearLayoutManager
-        val discoverAdapter = adapter as VideoAdapter
         val firstPosition = linearLayoutManager.findFirstVisibleItemPosition()
         val lastPosition = linearLayoutManager.findLastVisibleItemPosition()
         var percentMax = 0
         for (position in firstPosition..lastPosition) {
-            if (!discoverAdapter.isItemVideo(position)) continue
+
             val percent = getVisibleVideoHeight(position, linearLayoutManager)
             if (percentMax < percent) {
                 percentMax = percent
@@ -122,15 +116,14 @@ class VideoRecyclerView @JvmOverloads constructor(
         return result
     }
 
-    private fun getVisibleVideoHeight(position: Int, linearLayoutManager: LinearLayoutManager): Int {
+    private fun getVisibleVideoHeight(
+        position: Int,
+        linearLayoutManager: LinearLayoutManager
+    ): Int {
         val child = linearLayoutManager.findViewByPosition(position) ?: return NO_POSITION
         val location = IntArray(2)
         child.getLocationInWindow(location)
         return if (location[1] < 0) location[1] + videoItemHeight else screenHeight - location[1]
-    }
-
-    private fun VideoAdapter.isItemVideo(position: Int): Boolean {
-        return position != NO_POSITION && getItemViewType(position) == ITEM_VIEW_TYPE_VIDEO
     }
 }
 
@@ -140,10 +133,9 @@ interface VideoPlayerEventListener {
     fun onPlay()
 }
 
-
 fun View.screenSize(): Point {
     val display = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
     val point = Point()
-    display.getSize(point)
+    display.getRealSize(point)
     return point
 }

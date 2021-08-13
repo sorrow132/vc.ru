@@ -12,11 +12,10 @@ class RepositoryImpl @Inject constructor(
     private val dispatchers: DispatcherProvider
 ) : Repository {
     private val subSiteId: String = "237832"
-    private val sorting: String = "day"
+    private val sorting: String = "week"
     private val allSite: Boolean = false
-    private val lastId: String = ""
 
-    override suspend fun getModels(): ResponseResult<List<ModelPost>> =
+    override suspend fun getPosts(lastId: String): ResponseResult<List<ModelPost>> =
         withContext(dispatchers.io) {
             try {
                 service.getData(subSiteId, sorting, allSite, lastId).body()?.toModelPost()

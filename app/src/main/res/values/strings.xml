@@ -2,4 +2,9 @@
     <string name="app_name">Lenta</string>
     <string name="subsite_avatar_descr">SubSite avatar</string>
     <string name="post_comments">Post Comments</string>
+
+    <string name="count_comments">Обсудить</string>
+
+
+
 </resources>

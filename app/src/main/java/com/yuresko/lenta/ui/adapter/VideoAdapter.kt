@@ -5,39 +5,24 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.yuresko.lenta.R
 import com.yuresko.lenta.models.ModelPost
 
-class VideoAdapter :
-    PagingDataAdapter<ModelPost, RecyclerView.ViewHolder>(DiffUtilCallBack()) {
-    private var data = ArrayList<VideoViewItem>()
+class VideoAdapter : PagingDataAdapter<ModelPost, RecyclerView.ViewHolder>(DiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            VideoViewItem.ITEM_VIEW_TYPE_VIDEO -> VideoViewHolder(inflater, parent)
-            else -> throw IllegalArgumentException()
-        }
+        val inflater =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_video, parent, false)
+        return VideoViewHolder(inflater)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val value = data[position]
-        when (holder) {
-            is VideoViewHolder -> holder.bind(value as VideoViewItem.VideoItem)
+
+        getItem(position).let {
+            if (it != null) {
+                (holder as VideoViewHolder).bind(it)
+            }
         }
-    }
-
-    override fun getItemCount(): Int {
-        return data.size
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return data[position].viewType
-    }
-
-    fun setData(videos: List<ModelPost>) {
-        data.clear()
-        data.addAll(VideoViewItem.buildItems(videos))
-        notifyDataSetChanged()
     }
 
     class DiffUtilCallBack : DiffUtil.ItemCallback<ModelPost>() {
@@ -46,8 +31,7 @@ class VideoAdapter :
         }
 
         override fun areContentsTheSame(oldItem: ModelPost, newItem: ModelPost): Boolean {
-            return oldItem.name == newItem.name
-                    && oldItem.name == newItem.name
+            return oldItem == newItem
         }
     }
 }

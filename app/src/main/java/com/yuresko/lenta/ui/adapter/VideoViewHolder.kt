@@ -1,9 +1,8 @@
 package com.yuresko.lenta.ui.adapter
 
 import android.graphics.Color
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -13,36 +12,50 @@ import com.yuresko.lenta.R
 import com.yuresko.lenta.models.ModelPost
 import kotlinx.android.synthetic.main.item_video.view.*
 
-class VideoViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.item_video, parent, false)),
-    VideoPlayerEventListener {
-    private var item: VideoViewItem.VideoItem? = null
+class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view), VideoPlayerEventListener {
+    private var item: ModelPost? = null
 
-    fun bind(model: VideoViewItem.VideoItem) {
+    fun bind(model: ModelPost) {
         item = model
 
-        if (model.data.likes > 0)
-            itemView.postLikes.setTextColor(Color.GREEN)
+        itemView.subSiteName.text = model.subSiteName
+        itemView.userName.text = model.name
+        itemView.postLikes.text = model.likes.toString()
+
+        if (model.likes > 0)
+            itemView.postLikes.setTextColor(ContextCompat.getColor(itemView.context, R.color.comments_color))
         else
             itemView.postLikes.setTextColor(Color.GRAY)
 
-        itemView.subSiteName.text = model.data.subSiteName
-        itemView.userName.text = model.data.name
-        itemView.commentsCount.text = model.data.comments.toString()
-        itemView.postLikes.text = model.data.likes.toString()
+
+        if (model.comments > 0)
+            itemView.commentsCount.text = model.comments.toString()
+        else
+            itemView.commentsCount.text =
+                itemView.context.resources.getString(R.string.count_comments)
+
+
+        if (model.userDescription.isEmpty())
+            itemView.headingPost.visibility = View.GONE
+        else
+            itemView.headingPost.visibility = View.VISIBLE
+        itemView.headingPost.text = model.userDescription
+
 
         // Set avatar
-        with(model.data.avatar) {
+        with(model.avatar)
+        {
             Glide.with(itemView.context)
-                .load(model.data.avatar)
+                .load(model.avatar)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemView.userAvatar)
         }
 
-        // Set video
-        with(model.data.video) {
+        // Set video preview
+        with(model.video)
+        {
             Glide.with(itemView.context)
-                .load(model.data.video)
+                .load(model.video)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemView.itemVideoPlayerThumbnail)
         }
@@ -67,20 +80,20 @@ class VideoViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     override fun onPlay() {
         itemView.postDelayed({
             if (itemView.itemVideoPlayer.player != null) {
-                itemView.itemVideoPlayer.visibility = View.VISIBLE
                 itemView.itemVideoPlayerThumbnail.visibility = View.INVISIBLE
+                itemView.itemVideoPlayer.visibility = View.VISIBLE
             }
         }, DELAY_BEFORE_HIDE_THUMBNAIL) // wait to be sure the texture view is render
     }
 
     private fun SimpleExoPlayer.playVideo() {
-        stop(true)
-        val videoUrl = item?.data?.video ?: return
+        stop()
+        val videoUrl = item?.video ?: return
         setMediaItem(MediaItem.fromUri(videoUrl))
         prepare()
     }
 
     companion object {
-        private const val DELAY_BEFORE_HIDE_THUMBNAIL = 50L
+        private const val DELAY_BEFORE_HIDE_THUMBNAIL = 500L
     }
 }

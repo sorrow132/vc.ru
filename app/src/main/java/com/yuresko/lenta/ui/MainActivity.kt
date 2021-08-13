@@ -1,18 +1,22 @@
 package com.yuresko.lenta.ui
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.Window
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yuresko.lenta.R
-import com.yuresko.lenta.base.UiState
 import com.yuresko.lenta.ui.adapter.VideoAdapter
-import com.yuresko.lenta.ui.adapter.VideoViewHolder
+import com.yuresko.lenta.ui.adapter.WrapContentLinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,32 +27,25 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         videoAdapter = VideoAdapter()
         videoRecyclerView.apply {
+            layoutManager =
+                WrapContentLinearLayoutManager(
+                    this@MainActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             adapter = videoAdapter
         }
 
-        subscribeUi()
+        lifecycleScope.launch {
+            viewModel.posts.collectLatest(videoAdapter::submitData)
+        }
+
     }
 
-    private fun subscribeUi() {
-        viewModel.data.observe(this, { state ->
-            when (state) {
-                is UiState.Error -> {
-                    progressBar.visibility = View.GONE
-                    Log.e("Error state", state.error.message.toString())
-                }
-                UiState.Loading -> {
-                    progressBar.visibility = View.VISIBLE
-                }
-                is UiState.Success -> {
-                    progressBar.visibility = View.GONE
-                    videoAdapter.setData(state.data)
-                }
-            }
-        })
-    }
 
     override fun onPause() {
         super.onPause()
